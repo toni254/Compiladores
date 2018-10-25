@@ -40,6 +40,8 @@ PRI      = "private"
 VOI      = "void"
 PRINT    = "print"
 
+//Operadradores aritmeticos
+
 //expresiones
 
 ENTERO  = [0-9]+   
@@ -50,7 +52,7 @@ ENTER   = [\ \n]
 
 %%
 
-<YYINITIAL> {INT}      { return new Symbol(sym.INT, yyline, yycolumn,"entero");}
+<YYINITIAL> {INT}      { System.out.println(sym.INT + " " + yyline +" " + yycolumn +" "+yytext()); return new Symbol(sym.INT, yyline, yycolumn,"entero");}
 <YYINITIAL> {CHAR}     { return new Symbol(sym.CHAR, yyline, yycolumn,"caracter");}
 <YYINITIAL> {PUB}       { return new Symbol(sym.PUB, yyline, yycolumn,"publico");}
 <YYINITIAL> {PRI}       { return new Symbol(sym.PRI, yyline, yycolumn,"privado");}

@@ -737,7 +737,7 @@ public class scanner implements java_cup.runtime.Scanner {
             // fall through
           case 38: break;
           case 17: 
-            { return new Symbol(sym.INT, yyline, yycolumn,"entero");
+            { System.out.println(INT + " " + yyline +" " + yycolumn +" "+yytext()); return new Symbol(sym.INT, yyline, yycolumn,"entero");
             } 
             // fall through
           case 39: break;
