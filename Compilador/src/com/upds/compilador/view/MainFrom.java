@@ -5,17 +5,53 @@
  */
 package com.upds.compilador.view;
 
+import com.upds.compilador.analisis.parser;
+import com.upds.compilador.analisis.scanner;
+import com.upds.compilador.model.Tokens;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author hell
  */
 public class MainFrom extends javax.swing.JFrame {
+    
+    
+    public void llenarJTable1(scanner scan){
+        DefaultTableModel tabla = new DefaultTableModel();
+        ArrayList<Object> columna = new ArrayList<Object>();
+        
+        columna.add("T_ID");
+        columna.add("T_Nombre");
+        columna.add("Linea");
+        columna.add("Columna");
+        columna.add("Contenido");
+        
+        for (Object col : columna){
+            tabla.addColumn(col);
+        }
+        ArrayList<Object[]> data = new ArrayList<>();
+        for(Tokens tok : scan.listTokens){
+            data.add(new Object[]{tok.getTokenid(), tok.getToken(), tok.getLinea(), tok.getColumna(), tok.getContenido()});
+        }
+        for(Object[] d : data){
+            tabla.addRow(d);
+        }
+        
+        jTable1.setModel(tabla);
+        
+        
+    }
 
     /**
      * Creates new form MainFrom
      */
     public MainFrom() {
         initComponents();
+         
     }
 
     /**
@@ -27,21 +63,98 @@ public class MainFrom extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTable1);
+
+        jButton1.setText("Analizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            String texto=" Public void  Metodo1(int j, char c){\n print(\"hola mundo\"); \n Int x=5;\n } ";
+            jTextArea1.setText(texto);
+            System.out.println("Inicia el analisis...\n");
+            scanner scan = new scanner(new BufferedReader( new StringReader(texto)));
+            parser parser = new parser(scan);
+            parser.parse();
+            System.out.println("Finaliza el analisis...");
+            System.out.println();
+            llenarJTable1(scan);
+            
+           /* for (Tokens tok : scan.listTokens) {
+                System.out.println("tokID:"+tok.getTokenid()+"\t\tNombre:"+tok.getToken()+"\tContenido:"+tok.getContenido());   
+            }
+            */
+            //System.out.println(parser.parse()); 
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +192,10 @@ public class MainFrom extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

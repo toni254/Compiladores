@@ -3,6 +3,8 @@
 package com.upds.compilador.analisis;
 
 import java_cup.runtime.Symbol;
+import com.upds.compilador.model.Tokens;
+import java.util.ArrayList;
 
 
 
@@ -265,8 +267,11 @@ public class scanner implements java_cup.runtime.Scanner {
 
   /* user code: */
     //Código de usuario
+    public ArrayList<Tokens> listTokens = new ArrayList<Tokens>();
     String cadena= "";
-
+    public ArrayList<Tokens> listarTokens(){
+        return listTokens;
+    }
 
   /**
    * Creates a new scanner
@@ -656,51 +661,52 @@ public class scanner implements java_cup.runtime.Scanner {
           case 1: 
             { String errLex = "Error léxico : '"+yytext()+"' en la línea: "+(yyline+1)+" y columna: "+(yycolumn+1);
         System.out.println(errLex);
+        listTokens.add(new Tokens(300, "ERROR", yyline, yycolumn, yytext()));
             } 
             // fall through
           case 23: break;
           case 2: 
-            { return new Symbol(sym.PAR_A, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.PAR_A, "PAR_A", yyline, yycolumn, yytext())); return new Symbol(sym.PAR_A, yyline, yycolumn,yytext());
             } 
             // fall through
           case 24: break;
           case 3: 
-            { return new Symbol(sym.PAR_C, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.PAR_C, "PAR_c", yyline, yycolumn, yytext())); return new Symbol(sym.PAR_C, yyline, yycolumn,yytext());
             } 
             // fall through
           case 25: break;
           case 4: 
-            { return new Symbol(sym.LLAV_A, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.LLAV_A, "LLAV_A", yyline, yycolumn, yytext())); return new Symbol(sym.LLAV_A, yyline, yycolumn,yytext());
             } 
             // fall through
           case 26: break;
           case 5: 
-            { return new Symbol(sym.LLAV_C, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.LLAV_C, "LLAV_C", yyline, yycolumn, yytext())); return new Symbol(sym.LLAV_C, yyline, yycolumn,yytext());
             } 
             // fall through
           case 27: break;
           case 6: 
-            { return new Symbol(sym.COMA, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.COMA, "COMA", yyline, yycolumn, yytext())); return new Symbol(sym.COMA, yyline, yycolumn,yytext());
             } 
             // fall through
           case 28: break;
           case 7: 
-            { return new Symbol(sym.PYCOMA, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.PYCOMA, "PYCOMA", yyline, yycolumn, yytext())); return new Symbol(sym.PYCOMA, yyline, yycolumn,yytext());
             } 
             // fall through
           case 29: break;
           case 8: 
-            { return new Symbol(sym.ASIGNA, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.ASIGNA, "ASIGNA", yyline, yycolumn, yytext())); return new Symbol(sym.ASIGNA, yyline, yycolumn,yytext());
             } 
             // fall through
           case 30: break;
           case 9: 
-            { return new Symbol(sym.ID, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.ID, "ID", yyline, yycolumn, yytext())); return new Symbol(sym.ID, yyline, yycolumn,yytext());
             } 
             // fall through
           case 31: break;
           case 10: 
-            { return new Symbol(sym.ENTERO, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.ENTERO, "ENTERO", yyline, yycolumn, yytext())); return new Symbol(sym.ENTERO, yyline, yycolumn,yytext());
             } 
             // fall through
           case 32: break;
@@ -732,37 +738,37 @@ public class scanner implements java_cup.runtime.Scanner {
             // fall through
           case 37: break;
           case 16: 
-            { String tmp=cadena+"\""; cadena=""; yybegin(YYINITIAL);  return new Symbol(sym.CADENA, yychar,yyline,tmp);
+            { String tmp=cadena+"\""; cadena=""; yybegin(YYINITIAL);  listTokens.add(new Tokens(sym.CADENA, "CADENA", yyline, yycolumn, tmp)); return new Symbol(sym.CADENA, yychar,yyline,tmp);
             } 
             // fall through
           case 38: break;
           case 17: 
-            { System.out.println(sym.INT + " " + yychar +" " + yycolumn +" "+yytext()); return new Symbol(sym.INT, yyline, yycolumn,"entero");
+            { listTokens.add(new Tokens(sym.INT, "INT", yyline, yycolumn, yytext())); return new Symbol(sym.INT, yyline, yycolumn,"entero");
             } 
             // fall through
           case 39: break;
           case 18: 
-            { return new Symbol(sym.CHAR, yyline, yycolumn,"caracter");
+            { listTokens.add(new Tokens(sym.CHAR, "CHAR", yyline, yycolumn, yytext()));return new Symbol(sym.CHAR, yyline, yycolumn,"caracter");
             } 
             // fall through
           case 40: break;
           case 19: 
-            { return new Symbol(sym.VOI, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.VOI, "VOID", yyline, yycolumn, yytext())); return new Symbol(sym.VOI, yyline, yycolumn,yytext());
             } 
             // fall through
           case 41: break;
           case 20: 
-            { return new Symbol(sym.PRINT, yyline, yycolumn,yytext());
+            { listTokens.add(new Tokens(sym.PRINT, "PRINT", yyline, yycolumn, yytext())); return new Symbol(sym.PRINT, yyline, yycolumn,yytext());
             } 
             // fall through
           case 42: break;
           case 21: 
-            { return new Symbol(sym.PUB, yyline, yycolumn,"publico");
+            { listTokens.add(new Tokens(sym.PUB, "PUB", yyline, yycolumn, yytext())); return new Symbol(sym.PUB, yyline, yycolumn,"publico");
             } 
             // fall through
           case 43: break;
           case 22: 
-            { return new Symbol(sym.PRI, yyline, yycolumn,"privado");
+            { listTokens.add(new Tokens(sym.PRI, "PRI", yyline, yycolumn, yytext())); return new Symbol(sym.PRI, yyline, yycolumn,"privado");
             } 
             // fall through
           case 44: break;
